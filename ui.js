@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const success = await window.initMidi();
         
         if (success || window.outputPort) {
-            statusEl.innerText = "Conectado al Amplificador";
+            statusEl.innerText = "Conectado al Amplificador (" + window.outputPort.name + ")";
             statusEl.className = "status connected";
             connectBtn.style.display = 'none'; // Hide connect button once connected
             mainContent.classList.remove('disabled'); // Enable controls
         } else {
-            statusEl.innerText = "No se encontró el Amplificador. Revisa el USB OTG.";
+            statusEl.innerText = "Error. " + (window.lastMidiDebugInfo || "OTG/USB desconectado.");
             statusEl.className = "status disconnected";
             connectBtn.innerText = "Reintentar Conexión";
             connectBtn.disabled = false;

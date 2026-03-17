@@ -76,19 +76,22 @@ function scanPorts() {
     const inputs = Array.from(midiAccess.inputs.values());
     const outputs = Array.from(midiAccess.outputs.values());
     
-    // Look for Yamaha THR (Could show up as "THR10X", "Yamaha THR10", "USB MIDI Device", etc depending on Android OS)
+    let debugInfo = `Available Outputs (${outputs.length}): `;
+    
+    // Look for Yamaha THR explicitly first
     for (let output of outputs) {
+        debugInfo += `[${output.name}] `;
         if (output.name.toLowerCase().includes('thr') || output.name.toLowerCase().includes('yamaha')) {
             outputPort = output;
-            console.log("Found Output Port:", output.name);
-            break;
+            console.log("Found Output Port explicitly:", output.name);
+            break; // Found preferred
         }
     }
     
-    // Fallback: If no THR named port, and there's only 1 output, just use it (common with generic OTG adapters)
+    // Fallback: Just grab the first available output port (very common with OTG generic adapters)
     if (!outputPort && outputs.length > 0) {
         outputPort = outputs[0];
-         console.log("Using default output port (THR not identified by name):", outputPort.name);
+        console.log("Using first available output port as fallback:", outputPort.name);
     }
     
     for (let input of inputs) {
@@ -99,7 +102,13 @@ function scanPorts() {
          }
     }
     
-    return !!outputPort;
+    window.lastMidiDebugInfo = debugInfo;
+    
+    if(outputPort) {
+        window.outputPort = outputPort; // Ensure it is globally set for ui.js to check
+        return true;
+    }
+    return false;
 }
 
 function handleIncomingMidi(message) {
