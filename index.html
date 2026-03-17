@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THR10X Controller</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>THR10X <span class="accent">Controller</span></h1>
+            <div id="connection-status" class="status disconnected">Desconectado</div>
+            <button id="connect-btn" class="primary-btn">Conectar al Amplificador</button>
+        </header>
+
+        <main id="controls" class="disabled">
+            <!-- Selector de Amplificador -->
+            <section class="control-group">
+                <h2>Modelo de Amplificador</h2>
+                <div class="model-selector">
+                    <button class="model-btn active" data-model="0">Power I</button>
+                    <button class="model-btn" data-model="1">Power II</button>
+                    <button class="model-btn" data-model="2">Brown I</button>
+                    <button class="model-btn" data-model="3">Brown II</button>
+                    <button class="model-btn" data-model="4">Southern HI</button>
+                    <button class="model-btn" data-model="5">Clean</button>
+                    <button class="model-btn" data-model="6">Bass</button>
+                    <button class="model-btn" data-model="7">Flat</button>
+                </div>
+            </section>
+
+            <!-- Controles Principales (Knobs) -->
+            <section class="control-group knobs-container">
+                <div class="knob-wrapper">
+                    <label for="gain">Gain</label>
+                    <input type="range" id="gain" class="knob-slider" min="0" max="100" value="50">
+                    <span class="value-display" id="gain-val">50</span>
+                </div>
+                <div class="knob-wrapper">
+                    <label for="master">Master</label>
+                    <input type="range" id="master" class="knob-slider" min="0" max="100" value="50">
+                    <span class="value-display" id="master-val">50</span>
+                </div>
+                <div class="knob-wrapper">
+                    <label for="bass">Bass</label>
+                    <input type="range" id="bass" class="knob-slider" min="0" max="100" value="50">
+                    <span class="value-display" id="bass-val">50</span>
+                </div>
+                <div class="knob-wrapper">
+                    <label for="middle">Middle</label>
+                    <input type="range" id="middle" class="knob-slider" min="0" max="100" value="50">
+                    <span class="value-display" id="middle-val">50</span>
+                </div>
+                <div class="knob-wrapper">
+                    <label for="treble">Treble</label>
+                    <input type="range" id="treble" class="knob-slider" min="0" max="100" value="50">
+                    <span class="value-display" id="treble-val">50</span>
+                </div>
+            </section>
+
+            <!-- Efectos Básicos y Compresor/Puerta -->
+            <section class="control-group">
+                <h2>Efectos y Post-Procesado</h2>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="gate-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Noise Gate</span>
+                    <input type="range" id="gate-knob" class="fx-knob" min="0" max="100" value="50" disabled>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="comp-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Compresor</span>
+                    <input type="range" id="comp-knob" class="fx-knob" min="0" max="100" value="50" disabled>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="chorus-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Chorus</span>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="flanger-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Flanger</span>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="phaser-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Phaser</span>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="tremolo-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Tremolo</span>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="delay-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Delay</span>
+                </div>
+                 <div class="fx-section">
+                    <label class="switch">
+                        <input type="checkbox" id="reverb-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="fx-label">Reverb</span>
+                </div>
+            </section>
+
+            <!-- Simulación de Gabinete (Cab Sim) -->
+            <section class="control-group">
+                <h2>Cabinet Simulation</h2>
+                <select id="cab-selector" class="dropdown-selector">
+                    <option value="0">Off (Bypass)</option>
+                    <option value="1">Brit 4x12</option>
+                    <option value="2">US 2x12</option>
+                    <option value="3">US 4x12</option>
+                    <option value="4">Yamaha 4x12</option>
+                    <!-- Agregamos las genéricas conocidas -->
+                </select>
+            </section>
+        </main>
+    </div>
+    <script src="midi.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
